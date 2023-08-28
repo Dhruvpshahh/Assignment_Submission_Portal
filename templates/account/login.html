@@ -1,0 +1,48 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load bootstrap4 %}
+
+{% load crispy_forms_filters %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+  <div class="text-center">
+    <div class="container"><h1>{% trans "Login" %}</h1></div><br>
+
+    {% get_providers as socialaccount_providers %}
+
+    <p>{% blocktrans with site.name as site_name %}Please sign in with one
+    of your existing third party accounts.{% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+
+      <div class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </div>
+
+      <!-- <div class="login-or border-top border-bottom my-3">{% trans 'OR' %}</div>
+
+    </div> -->
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+  </div>
+  <!-- <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="d-grid">
+            <button class="primaryAction mt-3 btn btn-dark" type="submit">{% trans "Sign In" %}</button><br>
+            <a class="button secondaryAction text-dark text-center" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          </div>
+        </form>
+    </div>
+  </div> -->
+{% endblock %}

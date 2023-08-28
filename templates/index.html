@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1 style="font-family: 'Merriweather Sans', sans-serif; text-align: center; margin-top: 0.7em; border: 2px solid black;padding-top: 0.2em; padding-bottom: 0.2em; border-radius: 5px; ">Assignment
+    Submission Portal</h1>
+
+{% if not user.is_authenticated %}
+<br>
+<center>
+<div class="container" style="margin-top:0.7em;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div class="card " style="width: 18rem;border: 2px solid black;border-radius: 10px;">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">Login</h5>
+
+            <p class="card-text" style="font-family: 'Merriweather Sans';">Login to your account below</p>
+            <div class="text-center">
+
+              <a href="{% url 'account_login' %}" style="color: white;"><button type="button" class="btn btn-success">Login</button></a>
+            </div>
+
+          </div>
+        </div>
+      </div></center>
+      <!-- <div class="col-sm">
+        <div class="card " style="width: 18rem; border: 2px solid black; border-radius: 10px;">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">Sign Up</h5>
+
+            <p class="card-text" style="font-family: 'Merriweather Sans';">New to the portal? Sign up now!</p>
+            <div class="text-center">
+
+
+              <a href='{% url 'account_signup' %}'><button type="button" class="btn btn-success"> Sign up</button></a>
+            </div>
+            <br>
+
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="col-sm">
+        <div class="card " style="width: 18rem; border: 2px solid black; border-radius: 10px;">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">Admin Login</h5>
+
+            <pre class="card-text" style="font-family: 'Merriweather Sans';">
+            Are you an admin? Login now!
+            </pre>
+            <div class="text-center">
+
+              <a href='{% url 'account_login' %}'><button type="button" class="btn btn-success">Login</button></a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="card text-center">
+  <div class="card-header">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Offered Courses</h5>
+    <a href="{% url "assignments:available" %}" class="btn btn-primary">Courses</a>
+    <br><br>
+    <h5 class="card-title">Assignment List</h5>
+    <a href="{% url "assignments:list" %}" class="btn btn-primary">Assignments</a>
+    {% if user.is_staff %}
+    <br><br>
+    <h5 class="card-title">Assignment Submissions</h5>
+    <a href="{% url "assignments:submission" %}" class="btn btn-primary">Submissions</a>
+    {% endif %}
+  </div>
+  <div class="card-footer text-muted">
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
