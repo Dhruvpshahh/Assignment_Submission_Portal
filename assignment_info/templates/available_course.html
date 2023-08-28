@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<h2>Offered Courses</h2><br>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Courses Code</th>
+        <th scope="col">Courses Name</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for c in course_list %}
+        {% if c in c_registerd %}
+        <tr>
+          <td>{{ c.code }}</td>
+          <td>{{ c.course_name }}</td>
+          <td><a href="{% url 'assignments:deregister_course' pk=c.pk %}" class='btn btn-danger' >Deregister </a></td>
+          </tr>
+        {% else %}
+        <tr>
+        <td>{{ c.code }}</td>
+        <td>{{ c.course_name }}</td>
+        <td><a href="{% url 'assignments:register_course' pk=c.pk %}" class='btn btn-primary' >Register Now </a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

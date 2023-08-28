@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+  {% if created %}
+  <br>
+  <h2>Course {{course_code}} has been created and the user has been automatically added to the course</h2><br>
+  <a href="{% url 'index' %}" class="btn btn-primary">Go back to the home page</a>
+  {% else %}
+  <br>
+  <h2>Create Course</h2>
+  <form class="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" name="" value="Create" class="btn btn-warning">
+  </form>
+  <br>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<br>
+{% if superuser == 0 %}
+      {% if current_time.date < course.deadline_date %}
+            <div class="card">
+              <div class="card-header">
+                <h3>{{ course.name }}</h3>
+              </div>
+                <div class="card-body">
+                  <p class="card-text">Question: <br>{{ course.question }}</p>
+                  <p>Attachments:<br><a href="{{course.question_file.url}}" download>{{course.question_file.name}}</a></p>
+                  <p>Deadline: {{ c.deadline_date }} | {{ c.deadline_time}} </p>
+                  <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="submit" name="" value="Submit" class='btn btn-primary'>
+                  </form>
+                </div>
+              </div>
+      {% else %}
+          {% if current_time.date == course.deadline_date %}
+            {% if current_time.time < course.deadline_time %}
+                <div class="card">
+                <div class="card-header">
+                  <h3>{{ course.name }}</h3>
+                </div>
+                  <div class="card-body">
+                    <p class="card-text">Question: <br>{{ course.question }}</p>
+                    <p>Attachments:<br><a href="{{course.question_file.url}}" download>{{course.question_file.name}}</a></p>
+                    <form enctype="multipart/form-data" method="post">
+                      {% csrf_token %}
+                      {% bootstrap_form form %}
+                      <input type="submit" name="" value="Submit" class='btn btn-primary'>
+                    </form>
+                  </div>
+                </div>
+            {% else %}
+              <div class="card">
+                <div class="card-header">
+                  <h3>{{ course.name }}</h3>
+                </div>
+                  <div class="card-body">
+                    <p class="card-text">Question: <br>{{ course.question }}</p>
+                    <p>Attachments:<br><a href="{{course.question_file.url}}" download>{{course.question_file.name}}</a></p>
+                  </div>
+                </div>
+              {% endif %}
+
+          {% else %}
+              <div class="card">
+                <div class="card-header">
+                  <h3>{{ course.name }}</h3>
+                </div>
+                  <div class="card-body">
+                    <p class="card-text">Question: <br>{{ course.question }}</p>
+                    <p>Attachments:<br><a href="{{course.question_file.url}}" download>{{course.question_file.name}}</a></p>
+                  </div>
+                </div>
+          {% endif %}
+
+        {% endif %}
+
+        {% if submitted %}
+        <br>
+        <div class="card">
+          <div class="card-header">
+            <h3>Submission</h3>
+          </div>
+          <div class="card-body">
+              {% for i in course.submission.all %}
+                {% if i.user.username == user.get_username %}
+                  {%if i.marks == -1 %}
+                    <p>Submission: <a href="{{ i.answer.url }}" download >{{i.answer.name}}</a></p>
+                    <p>Not Graded Yet</p>
+                  {% else %}
+                    <p>Submission: <a href="{{ i.answer.url }}" download >{{i.answer.name}}</a></p>
+                    <p>Marks: {{i.marks}}</p>
+                    <p>Feedback: {{i.feedback}}</p>
+                    <p>Checked by: {{i.checked_by}}</p>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+{% else %}
+      <div class="card">
+        <div class="card-header">
+          <h3>{{ course.name }}</h3>
+        </div>
+          <div class="card-body">
+            <p class="card-text">Question: <br>{{ course.question }}</p>
+            <p>Attachments:<br><a href="{{course.question_file.url}}" download>{{course.question_file.name}}</a></p>
+          </div>
+        </div>
+      <br><br>
+      <div class="card">
+        <div class="card-header">
+          <h3>Delete</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text" style = "color:red">Warning: Deleting this assignment will delete all the submissions and grades. This is an irreversible action.</p>
+          <form action="{% url 'assignments:deleteassign' course.pk %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Delete" class='btn btn-danger'>
+          </form>
+        </div>
+      </div>
+{% endif %}
+{% endblock %}
+
+
+

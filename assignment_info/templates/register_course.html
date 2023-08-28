@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<br>
+{% if wrong_key %}
+<h3> Wrong key entered.</h3>
+{% endif %}
+
+<h3>Register for the course {{course.code}}</h3>
+<br>
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <br>
+  <input type="submit" name="" value="Submit" class='btn btn-primary'>
+</form>
+
+{% endblock %}

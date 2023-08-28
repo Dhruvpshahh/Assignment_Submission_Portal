@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><h2 class='display 4'>{{ course.name }}</h2><br>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Roll No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Submitted at</th>
+        <th scope="col">File </th>
+        <th scope="col">Marks </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in course.submission.all %}
+      <tr>
+        <th scope="row">{{ i.user.last_name }}</th>
+        <td>{{ i.user.first_name}}</td>
+        <td>{{i.submitted_at}}</td>
+        <td><a href='{{i.answer.url }}' class='btn btn-danger'download>Download</a></td>
+
+        {% if i.marks == -1 %}
+        <td><a href="{% url 'assignments:grading_page' pk=i.pk %}"> Grade Now</a></td>
+        {% else %}
+        <td><a href="{% url 'assignments:grading_page' pk=i.pk %}" style = 'color:red'> {{ i.marks }} </a></td>
+        {% endif %}
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

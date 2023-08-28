@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+
+<br>
+<h3>{{ submission.course }}</h3><br>
+<h5>Name:  {{submission.user.first_name}}</h4>
+<h5>Roll No.: {{submission.user.last_name}}</h5>
+<h5>Max. Marks: {{ submission.course.max_marks }}</h5><br>
+
+<form class="" enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" name="" value="Grade" class="btn btn-primary">
+</form>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+  {% if current_time.date >= course.deadline_date %}
+    {% if current_time.time > course.deadline_time %}
+      <h3>You cannot submit this assignment anymore.</h3>
+    {% else %}
+      {% if submitted %}
+        <h2>You have successfully submitted your assignment.</h2>
+      {% else %}
+        <h1>Update: </h2>
+        <h4>Question: </h4>
+        <p>{{course.question}}</p>
+        <form enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <input type="submit" name="" value="Submit" class='btn btn-primary'>
+        </form>
+      {%endif%}
+    {% endif %}
+    {% else %}
+    {% if submitted %}
+      <h2>You have successfully submitted your assignment.</h2>
+    {% else %}
+      <h1>Submit your assignment</h2>
+      <h4>Question:</h4>
+      <p>{{course.question}}</p>
+      <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" name="" value="Submit" class='btn btn-primary'>
+      </form>
+    {%endif%}
+  {% endif %}
+
+{% endblock %}
