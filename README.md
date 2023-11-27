@@ -4,7 +4,7 @@ This is an assignment submission portal made using the Django framework. The por
 # Getting Started
 To use the assignment submission portal, you must have Python and Django installed on your machine.
 
-* Clone the repository: git clone https://github.com/arpan-khanna/Submission
+* Clone the repository: git clone https://github.com/Dhruvpshahh/Assignment_Submission_Portal.git
 * Install the dependencies: pip install -r requirement.txt
 
 To use the sql database, run the following commands:
